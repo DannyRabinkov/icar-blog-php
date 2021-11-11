@@ -30,19 +30,22 @@ if (isset($_POST['submit'])) {
     }
     if ($is_form_valid) {
         $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB);
-        $query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+        $query = "SELECT * FROM users WHERE email='$email'";
         $result = mysqli_query($link, $query);
 
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
-            // if ($user['password'] === $password) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
 
-            header('location: ./blog.php');
-            die;
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                header('location: ./blog.php');
+                die;
+            } else {
+                $errors['submit'] = '* Password is incorrect';
+            }
         } else {
-            $errors['submit'] = '* User not found or wrong Password.';
+            $errors['submit'] = '* User not found';
         }
     }
 }

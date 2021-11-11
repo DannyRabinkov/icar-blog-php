@@ -1,0 +1,11 @@
+.dropdown-no-arrow {
+    cursor: pointer;
+}
+
+.dropdown-no-arrow::after {
+    display: none;
+}
+
+#delete-post {
+    cursor: pointer;
+}

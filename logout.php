@@ -4,4 +4,4 @@ session_start();
 
 session_destroy();
 
-header('Location: ./signIn.php');
+header('Location: ./sign-in.php');

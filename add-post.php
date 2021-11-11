@@ -4,9 +4,15 @@ session_start();
 redirect_auth(false, './signIn.php');
 
 if (isset($_POST['submit'])) {
+    $link = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB);
 
-    $title = !empty($_POST['title']) ? trim(($_POST['title'])) :  '';
-    $article = !empty($_POST['article']) ? trim(($_POST['article'])) :  '';
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_URL);
+    $title = trim($title);
+    $title = mysqli_real_escape_string($link, $title);
+
+    $article = filter_input(INPUT_POST, 'article', FILTER_SANITIZE_STRING);
+    $article = trim($article);
+    $article = mysqli_real_escape_string($link, $article);
 
     $is_form_valid = true;
 
@@ -50,7 +56,7 @@ require_once 'tpl/header.php';
                 <?= field_errors('title'); ?>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="article" value="<?= posted_value('title') ?>" class="form-control"
+                <textarea name="article" value="<?= posted_value('article') ?>" class="form-control"
                     placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                 <label for="floatingTextarea2">Post</label><?= field_errors('article'); ?>
             </div>

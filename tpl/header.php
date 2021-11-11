@@ -1,4 +1,5 @@
-<?php $site_logo = 'i<i class="bi bi-truck">Car</i>' ?>
+<?php $site_logo = 'i <i class="bi bi-truck"></i> Car'; ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -11,6 +12,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="images/truck.svg" sizes="any" type="image/svg+xml">
     <title><?= $page_title ?> - iCar</title>
 </head>
 
@@ -28,37 +32,32 @@
                     <!-- Site LEFT Navigation-->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="about.php">About</a>
+                            <a class="nav-link<?= active_nav_item('About') ?>" href="about.php">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="blog.php">Blog</a>
+                            <a class="nav-link<?= active_nav_item('Blog') ?>" href="blog.php">Blog</a>
                         </li>
                     </ul>
                     <!-- Site Right Navigation -->
-                    <?php if (empty($_SESSION['user_name'])) : ?>
+                    <?php if (!empty($_SESSION['user_name'])) : ?>
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="signin.php">Signin</a>
+                        <li c lass="nav-item">
+                            <span class="nav-link text-light"><?= $_SESSION['user_name'] ?></span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="signup.php">Signup</a>
+                            <a class="nav-link" href="logout.php">Logout</a>
                         </li>
                     </ul>
-
                     <?php else : ?>
-
-                    <!-- Site Right Navigation -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <span class="nav-link"><?= $_SESSION['user_name'] ?>
-                            </span>
+                            <a class="nav-link<?= active_nav_item('Signin') ?>" href="sign-in.php">Signin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="logOut.php">Logout</a>
+                            <a class="nav-link<?= active_nav_item('Signup') ?>" href="signUp.php">Signup</a>
                         </li>
                     </ul>
-                    <?php endif ?>
-
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
